@@ -42,7 +42,9 @@ var cheerioHtmlFile = function(htmlfile) {
     if(fs.existsSync(htmlfile)){
 
             content = fs.readFileSync(htmlfile);
-
+//	console.log(content);
+    }else{
+	console.log("file not found"+htmlfile);
     }
     return cheerio.load(content);
 
@@ -96,10 +98,11 @@ if(require.main == module) {
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
         .option('--url <url>', 'url to a webpage')
         .parse(process.argv);
-    var fileOrUrl=program.file;
+    //var fileOrUrl=program.file;
+//    console.log(program.file);
     if(program.file) {
-        fileOrUrl = program.url;
-        var checkJson = checkHtmlFile(fileOrUrl, program.checks);
+        
+        var checkJson = checkHtmlFile(program.file, program.checks);
         var outJson = JSON.stringify(checkJson, null, 4);
         console.log(outJson);
     }else{
